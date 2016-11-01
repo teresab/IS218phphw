@@ -32,7 +32,6 @@ echo $_SERVER['SERVER_NAME'];
 //$_GET An associative array of variables passed to the current script via the 
 //URL parameters. 
 
-
 <?php
 echo 'Hello ' . htmlspecialchars($_GET["name"]) . '!';
 ?> // output Hello Hannes!
