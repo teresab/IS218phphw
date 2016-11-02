@@ -1,0 +1,118 @@
+!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>title</title>
+  </head>
+  <body>
+
+//ReflectionClass::export
+
+<?php
+class Apple {
+    public $var1;
+    public $var2 = 'Orange';
+
+    public function type() {
+        return 'Apple';
+    }
+}
+ReflectionClass::export('Apple');
+?>
+
+
+// ReflectionClass::getModifiers
+class Test {}
+$classTest = new Test();
+$reflectionClass = new \ReflectionClass('Test');
+$classModifiers = $reflectionClass->getModifiers();
+var_export($classModifiers);
+
+// ReflectionClass::isInstantiable - checks if class is Instantiable
+class C { }
+
+interface iface {
+    function f1();
+}
+
+class ifaceImpl implements iface {
+    function f1() {}
+}
+
+abstract class abstractClass {
+    function f1() { }
+    abstract function f2();
+}
+
+class D extends abstractClass {
+    function f2() { }
+}
+
+class privateConstructor {
+    private function __construct() { }
+}
+
+$classes = array(
+    "C",
+    "iface",
+    "ifaceImpl",
+    "abstractClass",
+    "D",
+    "privateConstructor",
+);
+
+foreach($classes  as $class ) {
+    $reflectionClass = new ReflectionClass($class);
+    echo "Is $class instantiable?  ";
+    var_dump($reflectionClass->IsInstantiable()); 
+}
+
+?>
+
+//ReflectionClass::isIterateable - Checks whether the class is iterateable. 
+
+
+<?php
+
+class IteratorClass implements Iterator {
+    public function __construct() { }
+    public function key() { }
+    public function current() { }
+    function next() { }
+    function valid() { }
+    function rewind() { }
+}
+class DerivedClass extends IteratorClass { }
+class NonIterator { }
+
+function dump_iterateable($class) {
+    $reflection = new ReflectionClass($class);
+    var_dump($reflection->isIterateable());
+}
+
+$classes = array("ArrayObject", "IteratorClass", "DerivedClass", "NonIterator");
+
+foreach ($classes as $class) {
+    echo "Is $class iterateable? ";
+    dump_iterateable($class);
+}
+?>
+
+//ReflectionClass::getMethods- Gets an array of methods for the class. 
+
+<?php
+class Apple {
+    public function firstMethod() { }
+    final protected function secondMethod() { }
+    private static function thirdMethod() { }
+}
+
+$class = new ReflectionClass('Apple');
+$methods = $class->getMethods();
+var_dump($methods);
+?>
+
+
+
+  </body>
+</html>
